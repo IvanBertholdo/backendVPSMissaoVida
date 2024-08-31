@@ -40,7 +40,7 @@ app.register(authRoutes, { prefix: '/auth' });
 
 const start = async () => {
   try {
-    await app.listen({ port: 8001, host: '189.126.111.132' });
+    await app.listen({ port: 8001, host: '0.0.0.0' });
   } catch (err) {
     app.log.error(err);
     process.exit(1);
