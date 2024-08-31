@@ -5,6 +5,7 @@ COPY ./package-lock.json .
 COPY ./prisma /prisma
 RUN npm ci --only=production
 
+RUN npx prisma generate
 
 COPY ./api /api
 COPY ./controllers /controllers
