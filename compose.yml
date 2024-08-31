@@ -11,8 +11,6 @@ services:
       timeout: 10s
       retries: 1
       start_period: 15s
-    environment:
-      - DATABASE_URL=postgresql://postgres:root@missaovida_pg:5432/db_missaovida
     deploy:
       resources:
         limits:
