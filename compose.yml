@@ -17,8 +17,8 @@ services:
           cpus: "0.1"
           memory: 125M
     networks:
-      - postgres-network
+      - bd_postgres-network
 
 networks:
-  postgres-network:
+  bd_postgres-network:
     external: true
