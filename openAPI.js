@@ -13,7 +13,7 @@ const openApiDocs = {
         description: 'Find more info here'
       },
       servers: [
-        { url: 'https://backendnovomissaovida.vercel.app', description: 'Servidor de Produção' },
+        { url: 'http://189.126.111.132:8001/', description: 'Servidor de Produção' },
       ],
   
       tags: [
