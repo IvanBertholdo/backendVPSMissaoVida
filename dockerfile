@@ -1,5 +1,7 @@
 FROM node:current-bookworm-slim
 
+RUN apt-get update && apt-get install -y curl
+
 COPY ./package.json .
 COPY ./package-lock.json .
 COPY ./prisma /prisma
