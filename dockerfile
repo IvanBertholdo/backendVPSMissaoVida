@@ -19,7 +19,7 @@ COPY ./passwordUtils.js .
 
 ENV NODE_ENV=production
 
-
+RUN npx prisma migrate deploy
 EXPOSE 8001
 
 CMD [ "npm","run","start" ]
