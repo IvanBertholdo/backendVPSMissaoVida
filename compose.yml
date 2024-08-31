@@ -1,0 +1,18 @@
+services:
+  missaovida_api:
+    build: .
+    container_name: missaovida_api
+    ports:
+      - 8001:8001
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 125M
+    networks:
+      - database_postgres-network
+
+networks:
+  database_postgres-network:
+    external: true
