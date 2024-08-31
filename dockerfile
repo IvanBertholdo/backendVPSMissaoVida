@@ -2,7 +2,7 @@ FROM node:current-bookworm-slim
 
 COPY ./package.json .
 COPY ./package-lock.json .
-
+COPY ./prisma /prisma
 RUN npm ci --only=production
 
 
