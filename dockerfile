@@ -8,7 +8,7 @@ COPY ./prisma /prisma
 RUN npm ci --only=production
 
 RUN npx prisma generate
-RUN npx prisma migrate deploy
+RUN npx prisma migrate dev
 
 COPY ./api /api
 COPY ./controllers /controllers
