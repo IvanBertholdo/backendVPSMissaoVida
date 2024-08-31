@@ -17,7 +17,7 @@ COPY ./.env .
 COPY ./openAPI.js .
 COPY ./passwordUtils.js .
 
-ENV DATABASE_URL=postgresql://postgres:root@localhost:5432/db_missaovida
+ENV DATABASE_URL=postgresql://postgres:root@189.126.111.132:5432/db_missaovida
 ENV NODE_ENV=production
 RUN npx prisma migrate dev
 
