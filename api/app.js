@@ -1,7 +1,9 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-import Fastify from 'fastify'
-import cors from '@fastify/cors'
+//import Fastify from 'fastify'
+const Fastify = require('fastify')
+//import cors from '@fastify/cors'
+const cors = require('@fastify/cors')
 const swagger = require('@fastify/swagger');
 const swaggerui = require('@fastify/swagger-ui');
 const fastifyJwt = require('@fastify/jwt');

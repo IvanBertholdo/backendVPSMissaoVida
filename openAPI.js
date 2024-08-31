@@ -11,11 +11,10 @@ const openApiDocs = {
       externalDocs: {
         url: 'https://swagger.io/resources/open-api/',
         description: 'Find more info here'
-      },
+      }, 
       servers: [
-        { url: 'http://localhost:8001/', description: 'Servidor de Produção' },
+        { url: 'http://localhost:8001', description: 'Servidor de Desenvolvimento' },
       ],
-  
       tags: [
         { name: 'Auth', description: 'Endpoints relacionados à autenticação' },
         { name: 'Usuario', description: 'Endpoints relacionados ao usuário' },
