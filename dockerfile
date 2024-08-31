@@ -8,7 +8,7 @@ COPY ./prisma /prisma
 RUN npm ci --only=production
 
 RUN npx prisma generate
-RUN npx prisma migrate dev
+
 
 COPY ./api /api
 COPY ./controllers /controllers
@@ -17,7 +17,9 @@ COPY ./.env .
 COPY ./openAPI.js .
 COPY ./passwordUtils.js .
 
+ENV DATABASE_URL=postgresql://postgres:root@missaovida_pg:5432/db_missaovida
 ENV NODE_ENV=production
+RUN npx prisma migrate dev
 
 EXPOSE 8001
 
