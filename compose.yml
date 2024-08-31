@@ -16,6 +16,8 @@ services:
         limits:
           cpus: "0.1"
           memory: 125M
+    depends_on:
+      - missaovida_pg
     networks:
       - bd_postgres-network
 
