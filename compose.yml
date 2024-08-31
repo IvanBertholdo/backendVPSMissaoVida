@@ -5,6 +5,12 @@ services:
     ports:
       - 8001:8001
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:9001/health"]
+      interval: 20s
+      timeout: 10s
+      retries: 1
+      start_period: 15s
     deploy:
       resources:
         limits:
