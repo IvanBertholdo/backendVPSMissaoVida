@@ -12,9 +12,6 @@ const userRoutes = require('../routes/userRoutes');
 const acolhidoRoutes = require('../routes/acolhidoRoutes');
 const openApiDocs = require('../openAPI')
 const strongPassword = require('../passwordUtils');
-import * as dotenv from 'dotenv'
-
-dotenv.config()
 
 const app = Fastify({ 
   logger: true 
