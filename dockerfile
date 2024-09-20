@@ -22,6 +22,6 @@ ENV NODE_ENV=production
 EXPOSE 8001
 
 # Rodar migrations antes de iniciar a aplicação
-RUN npx prisma migrate deploy
+RUN npx prisma migrate dev
 
 CMD [ "npm","run","prisma" ]
