@@ -36,6 +36,7 @@ app.register(swaggerui, openApiDocs);
 app.register(acolhidoRoutes, { prefix: '/api' });
 app.register(userRoutes, { prefix: '/api' });
 app.register(authRoutes, { prefix: '/auth' });
+
 app.get('/health', async (request, reply) => {
   return { status: 'UP' };
 });

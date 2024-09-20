@@ -27,7 +27,7 @@ model Acolhido {
   cpf_acolhido         String  @unique @db.VarChar(20)
   rg_acolhido          String  @unique @db.VarChar(20)
   orgao_expedidor_rg   String  @db.VarChar(50)
-  data_nascimento      DateTime 
+  data_nascimento      DateTime
   declaracao_racial    String  @db.VarChar(50)
   filiacao_pai         String  @db.VarChar(50)
   filiacao_mae         String  @db.VarChar(50)

@@ -16,7 +16,7 @@ async function acolhidoRoutes(fastify, options) {
                     cpf_acolhido: { type: 'string' },
                     rg_acolhido: { type: 'string' },
                     orgao_expedidor_rg: { type: 'string' },
-                    data_nascimento: { type: 'datetime'},
+                    data_nascimento: { type: 'string', format:'date'},
                     declaracao_racial: { type: 'string' },
                     filiacao_pai: { type: 'string' },
                     filiacao_mae: { type: 'string' },
