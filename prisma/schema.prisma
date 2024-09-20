@@ -23,14 +23,11 @@ model Usuario {
 model Acolhido {
   id_acolhido          Int     @id @default(autoincrement())
   nome_acolhido        String  @db.VarChar(50)
-  cidade_natural       String  @db.VarChar(50)
-  estado_natural       String  @db.VarChar(50)
-  cidade_origem        String  @db.VarChar(50)
-  estado_origem        String  @db.VarChar(50)
+  naturalidade         String  @db.VarChar(100)
   cpf_acolhido         String  @unique @db.VarChar(20)
   rg_acolhido          String  @unique @db.VarChar(20)
   orgao_expedidor_rg   String  @db.VarChar(50)
-  data_nascimento      String  @db.VarChar(11)
+  data_nascimento      DateTime 
   declaracao_racial    String  @db.VarChar(50)
   filiacao_pai         String  @db.VarChar(50)
   filiacao_mae         String  @db.VarChar(50)
@@ -41,18 +38,17 @@ model Acolhido {
   profissao_acolhido   String  @db.VarChar(50)
   estado_civil_acolhido String @db.VarChar(50)
   apoio_familiar       Boolean
-  contato_familiar     String  @db.VarChar(50)
-  filhos_acolhido      Int
+  nome_apoio           String  @db.VarChar(50)
+  endereco_apoio       String  @db.VarChar(50)
   religiao_acolhido    String  @db.VarChar(50)
+  filhos_acolhido      Int
+  ativo                Boolean
 
   filho                AcolhidoFilho[]
   saude                DadosSaude[]
   social               EstadoSocial[]
-  medicamento          Medicamento[]
   substancia           Substancia[]
-  termoalta            TermoAlta[]
   termoguarda          TermoGuarda[]
-  termoresponsabilidade TermoResponsabilidade[]
   vidajuridica         VidaJuridica[]
 }
 
@@ -72,6 +68,10 @@ model DadosSaude {
   id_dados_saude            Int     @id @default(autoincrement())
   tratamento_psiquiatrico   Boolean
   local_tratamento          String  @db.VarChar(50)
+  medicamento_psicotropico  Boolean
+  descricao_psicotropico    String  @db.VarChar(255)
+  medicamento_uso_continuo  Boolean
+  descricao_uso_continuo    String  @db.VarChar(255)
   lesao_fisica              Boolean
   local_lesao_fisica        String  @db.VarChar(255)
   doenca_respiratoria       Boolean
@@ -80,11 +80,15 @@ model DadosSaude {
   nome_alimento             String  @db.VarChar(50)
   alergia_medicamentos      Boolean
   nome_alergia_medicamento  String  @db.VarChar(50)
-  outras_doencas            String  @db.VarChar(50)
-  tentativa_suicidio        Boolean
-  automutilacao             Boolean
+  alguma_doenca             Boolean
+  nome_doenca               String  @db.VarChar(50)
+  problema_coracao          Boolean
+  doenca_coracao            String  @db.VarChar(50)
+  tem_cancer                Boolean
   historico_cancer          String  @db.VarChar(50)
   tipo_cancer               String  @db.VarChar(50)
+  tentativa_suicidio        Boolean
+  automutilacao             Boolean
   id_acolhido               Int
 
   acolhido                  Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
@@ -92,33 +96,20 @@ model DadosSaude {
   @@index([id_acolhido])
 }
 
-model EstadoSocial {
-  id_estado_social         Int     @id @default(autoincrement())
-  situacao_rua             Boolean
-  tempo_rua                String  @db.VarChar(50)
-  motivo_rua               String  @db.VarChar(255)
-  chegada_missao_vida      String  @db.VarChar(255)
-  sentimentos              String  @db.VarChar(50)
-  objetivos                String  @db.VarChar(50)
-  outros_centros           Boolean
-  nome_outros_centros      String  @db.VarChar(50)
-  tempo_outros_centros     String  @db.VarChar(50)
-  motivo_saida_outros_centros String @db.VarChar(50)
-  id_acolhido              Int
+model VidaJuridica {
+  id_vida_juridica     Int      @id @default(autoincrement())
+  historico_prisao     Boolean
+  motivo_prisao        String   @db.VarChar(50)
+  processos            Boolean
+  localidade_processo  String   @db.VarChar(255)
+  uso_tornozeleira     Boolean
+  informou_central     Boolean
+  situacao_legal       Boolean
+  motivo_situacao_ilegal String  @db.VarChar(50)
+  cumpriu_pena         Boolean
+  id_acolhido          Int
 
-  acolhido                 Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
-
-  @@index([id_acolhido])
-}
-
-model Medicamento {
-  id_medicamento         Int     @id @default(autoincrement())
-  medicamento_psicotropico Boolean
-  nome_medicamento       String  @db.VarChar(50)
-  motivo_uso             String  @db.VarChar(255)
-  id_acolhido            Int
-
-  acolhido               Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
+  acolhido             Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
 
   @@index([id_acolhido])
 }
@@ -126,14 +117,12 @@ model Medicamento {
 model Substancia {
   id_substancia         Int     @id @default(autoincrement())
   uso_alcool            Boolean
-  idade_alcool          Int
-  motivo_alcool         String  @db.VarChar(50)
+  motivo_alcool         String  @db.VarChar(255)
   uso_tabaco            Boolean
-  idade_tabaco          Int
   motivo_tabaco         String  @db.VarChar(255)
-  outras_drogas         String  @db.VarChar(50)
-  motivo_outras_drogas  String  @db.VarChar(50)
-  principal_substancia  String  @db.VarChar(50)
+  outras_substancias    Boolean
+  principal_substancia  String  @db.VarChar(255)
+  motivo_outras_substancias String  @db.VarChar(255)
   id_acolhido           Int
 
   acolhido              Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
@@ -141,12 +130,21 @@ model Substancia {
   @@index([id_acolhido])
 }
 
-model TermoAlta {
-  id_termo_alta   Int    @id @default(autoincrement())
-  pdf_termo_alta  Bytes?
-  id_acolhido     Int
+model EstadoSocial {
+  id_estado_social         Int     @id @default(autoincrement())
+  situacao_rua             Boolean
+  motivos_rua              String  @db.VarChar(255)
+  outros_centros           Boolean
+  nome_outros_centros      String  @db.VarChar(50)
+  motivo_saida_outros_centros String @db.VarChar(255)
+  chegada_missao_vida      String  @db.VarChar(255)
+  igreja                   String  @db.VarChar(50)
+  secretaria_governamental String  @db.VarChar(50)
+  sentimentos              String  @db.VarChar(50)
+  objetivos                String  @db.VarChar(50)
+  id_acolhido              Int
 
-  acolhido        Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
+  acolhido                 Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
 
   @@index([id_acolhido])
 }
@@ -162,35 +160,6 @@ model TermoGuarda {
   id_acolhido        Int
 
   acolhido           Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
-
-  @@index([id_acolhido])
-}
-
-model TermoResponsabilidade {
-  id_termo_responsabilidade  Int    @id @default(autoincrement())
-  pdf_termo_responsabilidade Bytes?
-  id_acolhido                Int
-
-  acolhido                   Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
-
-  @@index([id_acolhido])
-}
-
-model VidaJuridica {
-  id_vida_juridica     Int      @id @default(autoincrement())
-  historico_prisao     Boolean
-  motivo_prisao        String   @db.VarChar(50)
-  processos            Boolean
-  cidade_processo      String   @db.VarChar(255)
-  estado_processo      String   @db.VarChar(50)
-  uso_tornozeleira     Boolean
-  informou_central     Boolean
-  cumpriu_pena         Boolean
-  situacao_legal       Boolean
-  motivo_situacao_legal String  @db.VarChar(50)
-  id_acolhido          Int
-
-  acolhido             Acolhido @relation(fields: [id_acolhido], references: [id_acolhido])
 
   @@index([id_acolhido])
 }

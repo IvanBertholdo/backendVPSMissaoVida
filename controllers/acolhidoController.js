@@ -2,16 +2,13 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const createAcolhido = async (req, reply) => {
-    const { nome_acolhido, cidade_natural, estado_natural, cidade_origem, estado_origem, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, contato_familiar, filhos_acolhido, religiao_acolhido, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda, termo_responsabilidade, termo_alta} = req.body;
+    const { nome_acolhido, naturalidade, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, nome_apoio, endereco_apoio, religiao_acolhido, filhos_acolhido, ativo, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda} = req.body;
     //const transaction = await prisma.$transaction()
     try {      
         const acolhido = await prisma.acolhido.create({
             data: {
                 nome_acolhido,
-                cidade_natural,
-                estado_natural,
-                cidade_origem,
-                estado_origem,
+                naturalidade,
                 cpf_acolhido,
                 rg_acolhido,
                 orgao_expedidor_rg,
@@ -26,9 +23,11 @@ const createAcolhido = async (req, reply) => {
                 profissao_acolhido,
                 estado_civil_acolhido,
                 apoio_familiar,
-                contato_familiar,
+                nome_apoio,
+                endereco_apoio,               
+                religiao_acolhido,
                 filhos_acolhido,
-                religiao_acolhido
+                ativo
             }
         });
                
@@ -48,6 +47,10 @@ const createAcolhido = async (req, reply) => {
             data: {
                 tratamento_psiquiatrico: dados_saude.tratamento_psiquiatrico,
                 local_tratamento: dados_saude.local_tratamento,
+                medicamento_psicotropico: dados_saude.medicamento_psicotropico,
+                descricao_psicotropico: dados_saude.descricao_psicotropico,
+                medicamento_uso_continuo: dados_saude.medicamento_uso_continuo,
+                descricao_uso_continuo: dados_saude.descricao_uso_continuo,
                 lesao_fisica: dados_saude.lesao_fisica,
                 local_lesao_fisica: dados_saude.local_lesao_fisica,
                 doenca_respiratoria: dados_saude.doenca_respiratoria,
@@ -56,41 +59,30 @@ const createAcolhido = async (req, reply) => {
                 nome_alimento: dados_saude.nome_alimento,
                 alergia_medicamentos: dados_saude.alergia_medicamentos,
                 nome_alergia_medicamento: dados_saude.nome_alergia_medicamento,
-                outras_doencas: dados_saude.outras_doencas,
-                tentativa_suicidio: dados_saude.tentativa_suicidio,
-                automutilacao: dados_saude.automutilacao,
+                alguma_doenca: dados_saude.alguma_doenca,
+                nome_doenca: dados_saude.nome_doenca,
+                problema_coracao: dados_saude.problema_coracao,          
+                doenca_coracao: dados_saude.doenca_coracao,
+                tem_cancer: dados_saude.tem_cancer,
                 historico_cancer: dados_saude.historico_cancer,
                 tipo_cancer: dados_saude.tipo_cancer,
+                tentativa_suicidio: dados_saude.tentativa_suicidio,
+                automutilacao: dados_saude.automutilacao,
                 id_acolhido: acolhido.id_acolhido
             }
         });
-
-        
-        if (medicamento && medicamento.length > 0) {
-            for (const medicamentos of medicamento) {
-                await prisma.medicamento.create({
-                    data: {
-                        medicamento_psicotropico: medicamentos.medicamento_psicotropico,
-                        nome_medicamento: medicamentos.nome_medicamento,
-                        motivo_uso: medicamentos.motivo_uso,
-                        id_acolhido: acolhido.id_acolhido
-                    }
-                });
-            }
-        }
 
         await prisma.vidaJuridica.create({
             data: {
                 historico_prisao: vida_juridica.historico_prisao,
                 motivo_prisao: vida_juridica.motivo_prisao,
                 processos: vida_juridica.processos,
-                cidade_processo: vida_juridica.cidade_processo,
-                estado_processo: vida_juridica.estado_processo,
+                localidade_processo: vida_juridica.localidade_processo,
                 uso_tornozeleira: vida_juridica.uso_tornozeleira,
-                informou_central: vida_juridica.informou_central,
-                cumpriu_pena: vida_juridica.cumpriu_pena,
+                informou_central: vida_juridica.informou_central,          
                 situacao_legal: vida_juridica.situacao_legal,
-                motivo_situacao_legal: vida_juridica.motivo_situacao_legal,
+                motivo_situacao_ilegal: vida_juridica.motivo_situacao_legal,
+                cumpriu_pena: vida_juridica.cumpriu_pena,
                 id_acolhido: acolhido.id_acolhido
             }
         });
@@ -98,14 +90,12 @@ const createAcolhido = async (req, reply) => {
         await prisma.substancia.create({
             data: {
                 uso_alcool: substancia.uso_alcool,
-                idade_alcool: substancia.idade_alcool,
                 motivo_alcool: substancia.motivo_alcool,
                 uso_tabaco: substancia.uso_tabaco,
-                idade_tabaco: substancia.idade_tabaco,
                 motivo_tabaco: substancia.motivo_tabaco,
-                outras_drogas: substancia.outras_drogas,
-                motivo_outras_drogas: substancia.motivo_outras_drogas,
+                outras_substancias: substancia.outras_substancias,
                 principal_substancia: substancia.principal_substancia,
+                motivo_outras_substancias: substancia.motivo_outras_substancias,
                 id_acolhido: acolhido.id_acolhido
             }
         })
@@ -113,15 +103,15 @@ const createAcolhido = async (req, reply) => {
         await prisma.estadoSocial.create({
             data: {
                 situacao_rua: estado_social.situacao_rua,
-                tempo_rua: estado_social.tempo_rua,
-                motivo_rua: estado_social.motivo_rua,
-                chegada_missao_vida: estado_social.chegada_missao_vida,
-                sentimentos: estado_social.sentimentos,
-                objetivos: estado_social.objetivos,
+                motivos_rua: estado_social.motivos_rua,
                 outros_centros: estado_social.outros_centros,
                 nome_outros_centros: estado_social.nome_outros_centros,
-                tempo_outros_centros: estado_social.tempo_outros_centros,
                 motivo_saida_outros_centros: estado_social.motivo_saida_outros_centros,
+                chegada_missao_vida: estado_social.chegada_missao_vida,
+                igreja: estado_social.igreja,
+                secretaria_governamental: estado_social.secretaria_governamental,
+                sentimentos: estado_social.sentimentos,
+                objetivos: estado_social.objetivos,            
                 id_acolhido: acolhido.id_acolhido
             }
         });
@@ -138,20 +128,6 @@ const createAcolhido = async (req, reply) => {
             }
         });
 
-        await prisma.termoResponsabilidade.create({
-            data: {
-                pdf_termo_responsabilidade: termo_responsabilidade.pdf_termo_responsabilidade,
-                id_acolhido: acolhido.id_acolhido
-            }
-        });
-
-        await prisma.termoAlta.create({
-            data: {
-                pdf_termo_alta: termo_alta.pdf_termo_alta,
-                id_acolhido: acolhido.id_acolhido
-            }
-        });
-
         //await transaction.commit();
         console.log("Acolhido Cadastrado")
         return reply.status(200).send({ message: 'Acolhido cadastrado!' });  
@@ -162,7 +138,7 @@ const createAcolhido = async (req, reply) => {
 };
 
 const updateAcolhido = async (req, reply) => {
-    const { nome_acolhido, cidade_natural, estado_natural, cidade_origem, estado_origem, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, contato_familiar, filhos_acolhido, religiao_acolhido, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda, termo_responsabilidade, termo_alta } = req.body;
+    const { nome_acolhido, cidade_natural, estado_natural, cidade_origem, estado_origem, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, contato_familiar, filhos_acolhido, religiao_acolhido, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda } = req.body;
 
     //const transaction = await prisma.$transaction()
     try {
@@ -170,10 +146,7 @@ const updateAcolhido = async (req, reply) => {
             where: { rg_acolhido },
             data: {
                 nome_acolhido,
-                cidade_natural,
-                estado_natural,
-                cidade_origem,
-                estado_origem,
+                naturalidade,
                 cpf_acolhido,
                 rg_acolhido,
                 orgao_expedidor_rg,
@@ -188,9 +161,11 @@ const updateAcolhido = async (req, reply) => {
                 profissao_acolhido,
                 estado_civil_acolhido,
                 apoio_familiar,
-                contato_familiar,
+                nome_apoio,
+                endereco_apoio,               
+                religiao_acolhido,
                 filhos_acolhido,
-                religiao_acolhido
+                ativo
             }
         });
 
@@ -218,6 +193,10 @@ const updateAcolhido = async (req, reply) => {
             data: {
                 tratamento_psiquiatrico: dados_saude.tratamento_psiquiatrico,
                 local_tratamento: dados_saude.local_tratamento,
+                medicamento_psicotropico: dados_saude.medicamento_psicotropico,
+                descricao_psicotropico: dados_saude.descricao_psicotropico,
+                medicamento_uso_continuo: dados_saude.medicamento_uso_continuo,
+                descricao_uso_continuo: dados_saude.descricao_uso_continuo,
                 lesao_fisica: dados_saude.lesao_fisica,
                 local_lesao_fisica: dados_saude.local_lesao_fisica,
                 doenca_respiratoria: dados_saude.doenca_respiratoria,
@@ -226,29 +205,17 @@ const updateAcolhido = async (req, reply) => {
                 nome_alimento: dados_saude.nome_alimento,
                 alergia_medicamentos: dados_saude.alergia_medicamentos,
                 nome_alergia_medicamento: dados_saude.nome_alergia_medicamento,
-                outras_doencas: dados_saude.outras_doencas,
-                tentativa_suicidio: dados_saude.tentativa_suicidio,
-                automutilacao: dados_saude.automutilacao,
+                alguma_doenca: dados_saude.alguma_doenca,
+                nome_doenca: dados_saude.nome_doenca,
+                problema_coracao: dados_saude.problema_coracao,          
+                doenca_coracao: dados_saude.doenca_coracao,
+                tem_cancer: dados_saude.tem_cancer,
                 historico_cancer: dados_saude.historico_cancer,
-                tipo_cancer: dados_saude.tipo_cancer
+                tipo_cancer: dados_saude.tipo_cancer,
+                tentativa_suicidio: dados_saude.tentativa_suicidio,
+                automutilacao: dados_saude.automutilacao
             }
         });
-
-        if (medicamento && medicamento.length > 0) {
-            await prisma.medicamento.deleteMany({
-                where: { id_acolhido: acolhido.id_acolhido }
-            });
-            for (const medicamentos of medicamento) {
-                await prisma.medicamento.create({
-                    data: {
-                        medicamento_psicotropico: medicamentos.medicamento_psicotropico,
-                        nome_medicamento: medicamentos.nome_medicamento,
-                        motivo_uso: medicamentos.motivo_uso,
-                        id_acolhido: acolhido.id_acolhido
-                    }
-                });
-            }
-        }
 
         await prisma.vidaJuridica.update({
             where: { id_acolhido: acolhido.id_acolhido },
@@ -256,13 +223,12 @@ const updateAcolhido = async (req, reply) => {
                 historico_prisao: vida_juridica.historico_prisao,
                 motivo_prisao: vida_juridica.motivo_prisao,
                 processos: vida_juridica.processos,
-                cidade_processo: vida_juridica.cidade_processo,
-                estado_processo: vida_juridica.estado_processo,
+                localidade_processo: vida_juridica.localidade_processo,
                 uso_tornozeleira: vida_juridica.uso_tornozeleira,
-                informou_central: vida_juridica.informou_central,
-                cumpriu_pena: vida_juridica.cumpriu_pena,
+                informou_central: vida_juridica.informou_central,          
                 situacao_legal: vida_juridica.situacao_legal,
-                motivo_situacao_legal: vida_juridica.motivo_situacao_legal
+                motivo_situacao_ilegal: vida_juridica.motivo_situacao_legal,
+                cumpriu_pena: vida_juridica.cumpriu_pena
             }
         });
 
@@ -270,14 +236,12 @@ const updateAcolhido = async (req, reply) => {
             where: { id_acolhido: acolhido.id_acolhido },
             data: {
                 uso_alcool: substancia.uso_alcool,
-                idade_alcool: substancia.idade_alcool,
                 motivo_alcool: substancia.motivo_alcool,
                 uso_tabaco: substancia.uso_tabaco,
-                idade_tabaco: substancia.idade_tabaco,
                 motivo_tabaco: substancia.motivo_tabaco,
-                outras_drogas: substancia.outras_drogas,
-                motivo_outras_drogas: substancia.motivo_outras_drogas,
-                principal_substancia: substancia.principal_substancia
+                outras_substancias: substancia.outras_substancias,
+                principal_substancia: substancia.principal_substancia,
+                motivo_outras_substancias: substancia.motivo_outras_substancias
             }
         });
 
@@ -286,15 +250,15 @@ const updateAcolhido = async (req, reply) => {
             where: { id_acolhido: acolhido.id_acolhido },
             data: {
                 situacao_rua: estado_social.situacao_rua,
-                tempo_rua: estado_social.tempo_rua,
-                motivo_rua: estado_social.motivo_rua,
-                chegada_missao_vida: estado_social.chegada_missao_vida,
-                sentimentos: estado_social.sentimentos,
-                objetivos: estado_social.objetivos,
+                motivos_rua: estado_social.motivos_rua,
                 outros_centros: estado_social.outros_centros,
                 nome_outros_centros: estado_social.nome_outros_centros,
-                tempo_outros_centros: estado_social.tempo_outros_centros,
-                motivo_saida_outros_centros: estado_social.motivo_saida_outros_centros
+                motivo_saida_outros_centros: estado_social.motivo_saida_outros_centros,
+                chegada_missao_vida: estado_social.chegada_missao_vida,
+                igreja: estado_social.igreja,
+                secretaria_governamental: estado_social.secretaria_governamental,
+                sentimentos: estado_social.sentimentos,
+                objetivos: estado_social.objetivos
             }
         });
 
@@ -307,20 +271,6 @@ const updateAcolhido = async (req, reply) => {
                 recurso_especie: termo_guarda.recurso_especie,
                 aparelho_celular: termo_guarda.aparelho_celular,
                 outros_objetos: termo_guarda.outros_objetos
-            }
-        });
-
-        await prisma.termoResponsabilidade.update({
-            where: { id_acolhido: acolhido.id_acolhido },
-            data: {
-                pdf_termo_responsabilidade: termo_responsabilidade.pdf_termo_responsabilidade
-            }
-        });
-
-        await prisma.termoAlta.update({
-            where: { id_acolhido: acolhido.id_acolhido },
-            data: {
-                pdf_termo_alta: termo_alta.pdf_termo_alta
             }
         });
 
@@ -339,13 +289,10 @@ const getAcolhidos = async (req, reply) => {
             include: {
                 filho: true,
                 saude: true,
-                medicamento: true,
                 vidajuridica: true,
                 substancia: true,
                 social: true,
-                termoguarda: true,
-                termoresponsabilidade: true,
-                termoalta: true
+                termoguarda: true
             }
         });
         return reply.send(acolhidos);
@@ -363,13 +310,10 @@ const getAcolhidoById = async (req, reply) => {
             include: {
                 filho: true,
                 saude: true,
-                medicamento: true,
                 vidajuridica: true,
                 substancia: true,
                 social: true,
-                termoguarda: true,
-                termoresponsabilidade: true,
-                termoalta: true
+                termoguarda: true
             }
         });
         
