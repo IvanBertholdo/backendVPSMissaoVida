@@ -491,6 +491,7 @@ async function acolhidoRoutes(fastify, options) {
                     items: {
                         type: 'object',
                         properties: {
+                            id_acolhido: {type: 'number'},
                             nome_acolhido: { type: 'string' },
                             naturalidade: { type: 'string' },
                             cpf_acolhido: { type: 'string' },
@@ -650,6 +651,7 @@ async function acolhidoRoutes(fastify, options) {
                     description: 'Acolhido recuperado com sucesso',
                     type: 'object',
                         properties: {
+                            id_acolhido: {type: 'number'},
                             nome_acolhido: { type: 'string' },
                             naturalidade: { type: 'string' },
                             cpf_acolhido: { type: 'string' },
