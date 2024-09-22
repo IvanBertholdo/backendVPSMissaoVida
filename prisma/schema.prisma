@@ -40,8 +40,8 @@ model Acolhido {
   apoio_familiar       Boolean
   nome_apoio           String  @db.VarChar(50)
   endereco_apoio       String  @db.VarChar(50)
-  religiao_acolhido    String  @db.VarChar(50)
-  filhos_acolhido      Int
+  religiao_acolhido    Boolean
+  qual_religiao        String  @db.VarChar(50)
   ativo                Boolean
 
   filho                AcolhidoFilho[]

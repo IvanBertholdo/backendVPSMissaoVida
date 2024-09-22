@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const createAcolhido = async (req, reply) => {
-    const { nome_acolhido, naturalidade, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, nome_apoio, endereco_apoio, religiao_acolhido, filhos_acolhido, ativo, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda} = req.body;
+    const { nome_acolhido, naturalidade, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, nome_apoio, endereco_apoio, religiao_acolhido, qual_religiao, ativo, acolhidoFilhos, dados_saude, vida_juridica, substancia, estado_social, termo_guarda} = req.body;
     //const transaction = await prisma.$transaction()
     try {      
         const acolhido = await prisma.acolhido.create({
@@ -26,7 +26,7 @@ const createAcolhido = async (req, reply) => {
                 nome_apoio,
                 endereco_apoio,               
                 religiao_acolhido,
-                filhos_acolhido,
+                qual_religiao,
                 ativo
             }
         });
@@ -138,7 +138,7 @@ const createAcolhido = async (req, reply) => {
 };
 
 const updateAcolhido = async (req, reply) => {
-    const { nome_acolhido, cidade_natural, estado_natural, cidade_origem, estado_origem, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, contato_familiar, filhos_acolhido, religiao_acolhido, acolhidoFilhos, dados_saude, medicamento, vida_juridica, substancia, estado_social, termo_guarda } = req.body;
+    const { nome_acolhido, naturalidade, cpf_acolhido, rg_acolhido, orgao_expedidor_rg, data_nascimento, declaracao_racial, filiacao_pai, filiacao_mae, endereco_familiar, telefone, whatsapp, escolaridade_acolhido, profissao_acolhido, estado_civil_acolhido, apoio_familiar, nome_apoio, endereco_apoio, religiao_acolhido, qual_religiao, ativo, acolhidoFilhos, dados_saude, vida_juridica, substancia, estado_social, termo_guarda } = req.body;
 
     //const transaction = await prisma.$transaction()
     try {
@@ -164,7 +164,7 @@ const updateAcolhido = async (req, reply) => {
                 nome_apoio,
                 endereco_apoio,               
                 religiao_acolhido,
-                filhos_acolhido,
+                qual_religiao,
                 ativo
             }
         });

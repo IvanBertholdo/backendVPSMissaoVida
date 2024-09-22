@@ -29,8 +29,8 @@ async function acolhidoRoutes(fastify, options) {
                     apoio_familiar: { type: 'boolean' },
                     nome_apoio: { type: 'string' },
                     endereco_apoio: { type: 'string' },
-                    religiao_acolhido: { type: 'string' },
-                    filhos_acolhido: { type: 'integer' },
+                    religiao_acolhido: { type: 'boolean' },
+                    qual_religiao: { type: 'string' },
                     ativo: { type: 'boolean' },
                     acolhidoFilhos: {
                         type: 'array',
@@ -128,7 +128,7 @@ async function acolhidoRoutes(fastify, options) {
                             motivo_alcool: { type: 'string' },
                             uso_tabaco: { type: 'boolean' },
                             motivo_tabaco: { type: 'string' },
-                            outras_substancias: { type: 'string' },
+                            outras_substancias: { type: 'boolean' },
                             principal_substancia: { type: 'string' },
                             motivo_outras_substancias: { type: 'string' }
                         },
@@ -211,7 +211,7 @@ async function acolhidoRoutes(fastify, options) {
                     'religiao_acolhido',
                     'filhos_acolhido', 
                     'ativo',
-                    'acolhidoFilhos',
+                    //'acolhidoFilhos',
                     'dados_saude',
                     'vida_juridica',
                     'substancia',
@@ -269,8 +269,8 @@ async function acolhidoRoutes(fastify, options) {
                     apoio_familiar: { type: 'boolean' },
                     nome_apoio: { type: 'string' },
                     endereco_apoio: { type: 'string' },
-                    religiao_acolhido: { type: 'string' },
-                    filhos_acolhido: { type: 'integer' },
+                    religiao_acolhido: { type: 'boolean' },
+                    qual_religiao: { type: 'string' },
                     ativo: { type: 'boolean' },
                     acolhidoFilhos: {
                         type: 'array',
@@ -368,7 +368,7 @@ async function acolhidoRoutes(fastify, options) {
                             motivo_alcool: { type: 'string' },
                             uso_tabaco: { type: 'boolean' },
                             motivo_tabaco: { type: 'string' },
-                            outras_substancias: { type: 'string' },
+                            outras_substancias: { type: 'boolean' },
                             principal_substancia: { type: 'string' },
                             motivo_outras_substancias: { type: 'string' }
                         },
@@ -507,8 +507,8 @@ async function acolhidoRoutes(fastify, options) {
                             apoio_familiar: { type: 'boolean' },
                             nome_apoio: { type: 'string' },
                             endereco_apoio: { type: 'string' },
-                            religiao_acolhido: { type: 'string' },
-                            filhos_acolhido: { type: 'integer' },
+                            religiao_acolhido: { type: 'boolean' },
+                            qual_religiao: { type: 'string' },
                             ativo: { type: 'boolean' },
                             filho: {  //Esta referência a tabela filho está no schema.prisma
                                 type: 'array',
@@ -577,7 +577,7 @@ async function acolhidoRoutes(fastify, options) {
                                         motivo_alcool: { type: 'string' },
                                         uso_tabaco: { type: 'boolean' },
                                         motivo_tabaco: { type: 'string' },
-                                        outras_substancias: { type: 'string' },
+                                        outras_substancias: { type: 'boolean' },
                                         principal_substancia: { type: 'string' },
                                         motivo_outras_substancias: { type: 'string' }
                                     }
@@ -666,8 +666,8 @@ async function acolhidoRoutes(fastify, options) {
                             apoio_familiar: { type: 'boolean' },
                             nome_apoio: { type: 'string' },
                             endereco_apoio: { type: 'string' },
-                            religiao_acolhido: { type: 'string' },
-                            filhos_acolhido: { type: 'integer' },
+                            religiao_acolhido: { type: 'boolean' },
+                            qual_religiao: { type: 'string' },
                             ativo: { type: 'boolean' },
                             filho: {
                                 type: 'array',
@@ -736,7 +736,7 @@ async function acolhidoRoutes(fastify, options) {
                                         motivo_alcool: { type: 'string' },
                                         uso_tabaco: { type: 'boolean' },
                                         motivo_tabaco: { type: 'string' },
-                                        outras_substancias: { type: 'string' },
+                                        outras_substancias: { type: 'boolean' },
                                         principal_substancia: { type: 'string' },
                                         motivo_outras_substancias: { type: 'string' }
                                     }
