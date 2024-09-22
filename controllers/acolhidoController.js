@@ -81,7 +81,7 @@ const createAcolhido = async (req, reply) => {
                 uso_tornozeleira: vida_juridica.uso_tornozeleira,
                 informou_central: vida_juridica.informou_central,          
                 situacao_legal: vida_juridica.situacao_legal,
-                motivo_situacao_ilegal: vida_juridica.motivo_situacao_legal,
+                motivo_situacao_ilegal: vida_juridica.motivo_situacao_ilegal,
                 cumpriu_pena: vida_juridica.cumpriu_pena,
                 id_acolhido: acolhido.id_acolhido
             }
@@ -227,7 +227,7 @@ const updateAcolhido = async (req, reply) => {
                 uso_tornozeleira: vida_juridica.uso_tornozeleira,
                 informou_central: vida_juridica.informou_central,          
                 situacao_legal: vida_juridica.situacao_legal,
-                motivo_situacao_ilegal: vida_juridica.motivo_situacao_legal,
+                motivo_situacao_ilegal: vida_juridica.motivo_situacao_ilegal,
                 cumpriu_pena: vida_juridica.cumpriu_pena
             }
         });
