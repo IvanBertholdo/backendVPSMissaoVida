@@ -182,7 +182,7 @@ const updateAcolhido = async (req, reply) => {
                     data: {
                         nome_filho: filho.nome_filho,
                         paga_pensao: filho.paga_pensao,
-                        id_acolhido: rg_acolhido
+                        id_acolhido: acolhido.id_acolhido
                     }
                 });
             }
