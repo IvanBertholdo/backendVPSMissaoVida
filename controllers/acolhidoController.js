@@ -188,7 +188,7 @@ const updateAcolhido = async (req, reply) => {
             }
         }
 
-        const saude = await prisma.dadosSaude.findUnique({
+        const saude = await prisma.dadosSaude.findFirst({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
@@ -221,7 +221,7 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
-        const vida = await prisma.vidaJuridica.findUnique({
+        const vida = await prisma.vidaJuridica.findFirst({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
@@ -240,7 +240,7 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
-        const subs = await prisma.substancia.findUnique({
+        const subs = await prisma.substancia.findFirst({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
@@ -257,7 +257,7 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
-        const social = await prisma.estadoSocial.findUnique({
+        const social = await prisma.estadoSocial.findFirst({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
@@ -277,7 +277,7 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
-        const guarda = await prisma.termoGuarda.findUnique({
+        const guarda = await prisma.termoGuarda.findFirst({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
