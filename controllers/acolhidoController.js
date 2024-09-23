@@ -188,8 +188,12 @@ const updateAcolhido = async (req, reply) => {
             }
         }
 
+        const saude = await prisma.saude.findUnique({
+            where: { id_acolhido: acolhido.id_acolhido }
+        });
+
         await prisma.dadosSaude.update({
-            where: { id_acolhido: acolhido.id_acolhido },
+            where: { id_dados_saude: saude.id_dados_saude },
             data: {
                 tratamento_psiquiatrico: dados_saude.tratamento_psiquiatrico,
                 local_tratamento: dados_saude.local_tratamento,
@@ -217,8 +221,12 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
+        const vida = await prisma.vidaJuridica.findUnique({
+            where: { id_acolhido: acolhido.id_acolhido }
+        });
+
         await prisma.vidaJuridica.update({
-            where: { id_acolhido: acolhido.id_acolhido },
+            where: { id_vida_juridica: vida.id_vida_juridica },
             data: {
                 historico_prisao: vida_juridica.historico_prisao,
                 motivo_prisao: vida_juridica.motivo_prisao,
@@ -232,8 +240,12 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
+        const subs = await prisma.substancia.findUnique({
+            where: { id_acolhido: acolhido.id_acolhido }
+        });
+
         await prisma.substancia.update({
-            where: { id_acolhido: acolhido.id_acolhido },
+            where: { id_substancia: subs.id_substancia },
             data: {
                 uso_alcool: substancia.uso_alcool,
                 motivo_alcool: substancia.motivo_alcool,
@@ -245,9 +257,12 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
+        const social = await prisma.estadoSocial.findUnique({
+            where: { id_acolhido: acolhido.id_acolhido }
+        });
 
         await prisma.estadoSocial.update({
-            where: { id_acolhido: acolhido.id_acolhido },
+            where: { id_estado_social: social.id_estado_social },
             data: {
                 situacao_rua: estado_social.situacao_rua,
                 motivos_rua: estado_social.motivos_rua,
@@ -262,8 +277,12 @@ const updateAcolhido = async (req, reply) => {
             }
         });
 
+        const guarda = await prisma.termoGuarda.findUnique({
+            where: { id_acolhido: acolhido.id_acolhido }
+        });
+
         await prisma.termoGuarda.update({
-            where: { id_acolhido: acolhido.id_acolhido },
+            where: { id_termo_guarda: guarda.id_termo_guarda },
             data: {
                 autorizacao_guarda: termo_guarda.autorizacao_guarda,
                 documentos_guardados: termo_guarda.documentos_guardados,
