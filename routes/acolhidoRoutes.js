@@ -464,7 +464,11 @@ async function acolhidoRoutes(fastify, options) {
             response: {
                 200: {
                     description: 'Acolhido atualizado com sucesso',
-                    type: 'null'
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                        acolhido: { type: 'object' }
+                    }
                 },
                 400: {
                     description: 'Erro ao atualizar acolhido',
