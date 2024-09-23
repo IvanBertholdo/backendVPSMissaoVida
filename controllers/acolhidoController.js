@@ -188,7 +188,7 @@ const updateAcolhido = async (req, reply) => {
             }
         }
 
-        const saude = await prisma.saude.findUnique({
+        const saude = await prisma.dadosSaude.findUnique({
             where: { id_acolhido: acolhido.id_acolhido }
         });
 
