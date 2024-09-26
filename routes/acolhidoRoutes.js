@@ -221,7 +221,7 @@ async function acolhidoRoutes(fastify, options) {
                 ]
             },
             response: {
-                201: {
+                200: {
                     description: 'Acolhido criado com sucesso',
                     type: 'object',
                     properties: {
